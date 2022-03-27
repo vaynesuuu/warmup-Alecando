@@ -13,12 +13,10 @@ if(isset($_POST['message_btn']))
 			foreach($pdoQuery_run as $row)
 			{
 				echo '
-
 				<tr>
 					<th> '.$row->message.' </th><br></br>
 					<th> '.$row->date.' </th>
 				</tr>
-
 				';
 			}
 

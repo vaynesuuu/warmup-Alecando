@@ -18,5 +18,5 @@ catch(PDOException $error)
   echo "Failed to Connect";
 }
 
-  ?> 
 
+  ?> 

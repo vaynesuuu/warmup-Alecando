@@ -1,13 +1,16 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>Newsfeed</title>
 	<link rel="stylesheet" type="text/css" href="newsfeed.css">
 </head>
 <body>
+	<?php require 'partials.php' ?>
+	 
+
 	<h1> Newsfeed </h1>
 
 
@@ -35,9 +38,12 @@
 				<td> Date and Time </td>
 			
 			</tr> 
-			<?php include ('newsfeedoutput.php') ?>
+			<?php include ('newsfeeddisplay.php') ?>
 </table>
 </div>
+<li class="nav-item active">
+        <a class="nav-link" href="logout.php">Logout <span class="sr-only">(current)</span></a>
+      </li>';
 </section>
 </body>
 </html>
@@ -46,6 +52,14 @@
 
 
 <?php
+session_start();
+
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
+    header("location: login.php");
+    exit;
+}
+
+
 include 'newsfeed.php';
 
 if(isset($_POST['message_btn']))
@@ -53,8 +67,6 @@ if(isset($_POST['message_btn']))
 	$message = $_POST['message'];
 
 	$pdoQuery = "INSERT INTO postinfo(message) VALUES(:message)";
-
-
 	$pdoQuery_run = $newsfeedcon->prepare($pdoQuery);
 	$pdoQuery_exec = $pdoQuery_run->execute(['message' => $message]);
 
